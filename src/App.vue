@@ -1,5 +1,10 @@
 <template>
   <div id="box">
+    <button @click="chuxian">出现</button>
+      <button @click="yincang">隐藏</button>
+    <div class="new">
+      <router-view></router-view>
+    </div>
     <p v-bind="objectOfAttrs">count:{{ count }}</p>
     <li v-for="(item, index) in arr" :key="index">{{ item }}</li>
     <button @click="add">add{{ count }}</button>
@@ -23,15 +28,18 @@
     }}</el-button>
     <component :is="tab[newid]"></component>
   </div>
+
 </template>
 <script lang="ts" setup>
 import aboutview from "./views/AboutView.vue"
 import Home1 from "./views/Tabone.vue"
 import Home2 from "./views/Tabtwo.vue"
+import Home from "./views/Home.vue"
 import { ref, reactive, computed, onMounted, watch } from "vue"
 import useMainStore  from "./store"
 // import { toRefs } from "vue"
 import { storeToRefs } from "pinia"
+import { useRouter } from 'vue-router'
 
 const useMain = useMainStore()
 
@@ -90,6 +98,13 @@ const picsize = ref(1)
 const objectOfAttrs = {
   id: 'container',
   class: 'wrapper'
+}
+ const router = useRouter()
+const chuxian = ()=>{
+  router.push('/home/new1')
+}
+const yincang = () => {
+  router.push('/')
 }
 
 const pots = ref([
@@ -156,4 +171,22 @@ watch(source, (newValue) => {
 }, { immediate: true })
 </script>
 
-<style></style>
+<style scoped>
+.new{
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  border: 1px solid #000;
+  left: 400px;
+  top: 200px;
+  overflow: hidden;
+}
+.nav{
+  width: 500px;
+  height: 100px;
+  position: absolute;
+  border: 1px solid #000;
+  left: 400px;
+  top: 50px;
+}
+</style>
